@@ -1,0 +1,34 @@
+from flask import Blueprint, Flask, render_template, json
+from decorator import load_client_sc, load_db, current_app
+
+from services.FavoritesManager import FavoritesManager
+from services.PlaylistsManager import PlaylistsManager
+
+app = Flask(__name__, instance_relative_config=True)
+app.config.from_pyfile('../config.py')
+
+playlist_page = Blueprint('playlist_page', __name__,
+                        template_folder='../templates')
+
+@playlist_page.route('/playlist/test')
+def test(name=None):
+    return render_template('test.html')
+
+@playlist_page.route('/api/playlists/db/me')
+@load_client_sc
+@load_db
+def get_my_playlists():
+    me_id = app.config["SC_MY_ID"]
+    print(str(me_id))
+    list = PlaylistsManager().getJsonPlayslistFromDB(user_id=me_id)
+    return json.dumps(list)
+
+@playlist_page.route('/api/playlists/init/me')
+@load_client_sc
+@load_db
+def write_my_playlists():
+    me_id = app.config["SC_MY_ID"]
+    print(str(me_id))
+    list = PlaylistsManager().getJsonPlayslistFromDB(user_id=me_id)
+    return PlaylistsManager().savePlaylists(playlistsComplete=list)
+

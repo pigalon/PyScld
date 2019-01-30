@@ -1,0 +1,5 @@
+MY_EMAIL = "pigalon@gmail.com"
+MY_NAME="pigalon"
+SC_MY_ID="21381146"
+SC_MY_USERNAME="pierrock"
+DB_NAME="soundcloud"

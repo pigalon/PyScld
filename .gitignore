@@ -6,7 +6,11 @@ __pycache__/
 # C extensions
 *.so
 
+# Mac extension
+.DS_Store
+
 # Distribution / packaging
+instance/
 .Python
 build/
 develop-eggs/
@@ -102,3 +106,13 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+arangodb/__pycache__/StringUtil.cpython-37.pyc
+arangodb/__pycache__/DatabaseAdb.cpython-37.pyc
+arangodb/__pycache__/Playlist.cpython-37.pyc
+arangodb/__pycache__/PlaylistRepo.cpython-37.pyc
+arangodb/__pycache__/Track.cpython-37.pyc
+arangodb/__pycache__/TrackRepo.cpython-37.pyc
+arangodb/__pycache__/User.cpython-37.pyc
+arangodb/__pycache__/UserRepo.cpython-37.pyc
+web/static/css/.DS_Store
+

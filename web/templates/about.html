@@ -1,0 +1,157 @@
+<html>
+    <header>
+           <!-- Bootstrap core CSS-->
+    <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <!--<link href="/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">-->
+
+    <!-- Page level plugin CSS-->
+    <link href="/static/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+
+    <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css"/>
+
+
+    <!-- Custom styles for this template-->
+    <!---<link href="/static/css/sb-admin.css" rel="stylesheet"> -->
+
+    <!--<link href="/static/css/main.css" rel="stylesheet">-->
+
+    </header>
+
+    <body>
+
+           <!-- <div id="app">
+                    <h3>
+                      Vue Tables 2 - Server Side Demo
+                    </h3>
+                    <div class="col-md-8 col-md-offset-2">
+                      <div id="people">
+                        <v-server-table url="https://api.github.com/users/matfish2/repos" :columns="columns" :options="options">
+                        </v-server-table>
+                      </div>
+                    </div>
+                  </div>
+                -->
+        <div id ="app">        
+            <template>
+                <b-table striped hover :items="items"></b-table>
+            </template>
+        </div>
+        <div id="app2">
+            <div class="ui container">
+                <vuetable ref="vuetable"
+                    api-url="https://vuetable.ratiw.net/api/users"
+                    :fields="fields"
+                    pagination-path=""
+                    @vuetable:pagination-data="onPaginationData">
+                    <template slot="actions" scope="props">
+                        <div class="table-button-container">
+                            <button type="button" class="btn btn-primary" @click="editRow(props.rowData)"><i class="fa fa-edit"></i> Edit</button>&nbsp;&nbsp;
+                            <button type="button" class="btn btn-danger" @click="deleteRow(props.rowData)"><i class="fa fa-remove"></i> Delete</button>&nbsp;&nbsp;
+                        </div>
+                    </template>
+                </vuetable>
+                <vuetable-pagination ref="pagination"
+                    @vuetable-pagination:change-page="onChangePage">
+                </vuetable-pagination>
+                <b-pagination size="md" :total-rows="100" v-model="currentPage" :per-page="10">
+                    </b-pagination>
+               </div>
+        </div>
+
+        <script>
+            export default {
+                data () {
+                return {
+                    // Note 'isActive' is left out and will not appear in the rendered table
+                    fields: [
+                    {
+                        key: 'last_name',
+                        sortable: true
+                    },
+                    {
+                        key: 'first_name',
+                        sortable: false
+                    },
+                    {
+                        key: 'age',
+                        label: 'Person age',
+                        sortable: true,
+                        // Variant applies to the whole column, including the header and footer
+                        variant: 'danger'
+                    }
+                    ],
+                    items: [
+                    { isActive: true, age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
+                    { isActive: false, age: 21, first_name: 'Larsen', last_name: 'Shaw' },
+                    { isActive: false, age: 89, first_name: 'Geneva', last_name: 'Wilson' },
+                    { isActive: true, age: 38, first_name: 'Jami', last_name: 'Carney' }
+                    ]
+                }
+                }
+            }
+        </script>
+
+        <!-- Vue Js -->
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.2.6/vue.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.1/axios.min.js"></script>-->
+        // vuetable-2
+        <!--<script src="https://unpkg.com/vuetable-2@1.6.0"></script>-->
+        <script src="/static/js/vue.js"></script>
+        <script src="/static/js/axios.min.js"></script>
+
+        <script src="/static/js/vue-tables-2.js"></script>
+        <script src="/static/js/moment.min.js"></script>
+
+        
+
+        
+        <script>
+       
+            Vue.use(Vuetable);
+
+            new Vue({
+            el: '#app2',
+            components:{
+            'vuetable-pagination': Vuetable.VuetablePagination
+            },
+            data: {
+                fields: [{name:'name', titleClass: 'center aligned'}, 'email',{name: 'birthdate', callback: 'formatDate'},{'name':'nickname', 'title':'nick'},'gender','__slot:actions'],
+                options:{
+                    templates: {
+                        birthdate(h, row) {
+                        return this.formatDate(row.birthdate);
+                        }
+                    }
+                }
+            },
+            computed:{
+            /*httpOptions(){
+                return {headers: {'Authorization': "my-token"}} //table props -> :http-options="httpOptions"
+            },*/
+            },
+            methods: {
+                onPaginationData (paginationData) {
+                this.$refs.pagination.setPaginationData(paginationData)
+                },
+                onChangePage (page) {
+                this.$refs.vuetable.changePage(page)
+                },
+                editRow(rowData){
+                alert("You clicked edit on"+ JSON.stringify(rowData))
+                },
+                deleteRow(rowData){
+                alert("You clicked delete on"+ JSON.stringify(rowData))
+                },
+                formatDate(date) {
+                return moment(date).format('DD-MM-YYYY HH:mm:ss');
+                }
+
+            }
+            })
+        </script>
+        
+
+
+</body>
