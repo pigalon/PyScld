@@ -4,6 +4,7 @@ from soundcld.SCUserDao import SCUserDao
 from ardb.Playlist import Playlist
 from ardb.Track import Track
 from ardb.PlaylistRepo import PlaylistRepo
+from ardb.UserRepo import UserRepo
 from ardb.TrackRepo import TrackRepo
 
 class PlaylistsManager():
@@ -11,6 +12,7 @@ class PlaylistsManager():
     sCUserDao = None
     trackRepo = None
     playlistRepo = None
+    userRepo = None
 
     def __init__(self):
         client_sc = getattr(g,'client_sc', None)
@@ -19,7 +21,13 @@ class PlaylistsManager():
         db = getattr(g,'db', None)
         self.trackRepo = TrackRepo(db=db)
         self.playlistRepo = PlaylistRepo(db=db)
+        self.userRepo = UserRepo(db=db)
 
+    def getPlaylistsCountFromSCUser(self, user_id):
+        return self.sCUserDao.get(userId=user_id).playlist_count
+    
+    def getPlaylistsCountFromDB(self, user_id):
+        return self.userRepo.get_by_id(userId=user_id).playlist_count
 
     def getPlaylistsFromSCUser(self, user_id):
         return self.sCUserDao.get_all_playlists(userId=user_id)
@@ -33,6 +41,7 @@ class PlaylistsManager():
         for playlist in list :
             jsonList.append(playlist.to_dict())
         return jsonList
+        
         
 
     def savePlaylists(self, playlistsComplete):
