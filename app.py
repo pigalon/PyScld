@@ -5,12 +5,14 @@ from soundcld.SoundcloudAccess import SoundcloudAccess
 
 #from .arangodb.DatabaseAdb import DatabaseAdb
 from controlers.playlist_controller import playlist_page
+from controlers.user_controller import user_page
 from services.FavoritesManager import FavoritesManager
 from services.PlaylistsManager import PlaylistsManager
 # 21381146
 
 app = Flask(__name__,instance_relative_config=True, template_folder='web/templates', static_folder='web/static')
 app.register_blueprint(playlist_page)
+app.register_blueprint(user_page)
 app.config.from_object('config')
 app.config.from_pyfile('config.py')
 

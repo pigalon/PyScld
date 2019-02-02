@@ -2,8 +2,8 @@ from arango_orm import Database, Collection, Relation, Graph, GraphConnection
 from arango_orm.fields import List, String, UUID, Integer, Boolean, DateTime, Date
 
 
-from soundcld.util.Util import StringUtil
-from soundcld.util.Util import DateUtil
+from util.BaseUtil import StringUtil
+from util.BaseUtil import DateUtil
 
 
 class User(Collection):
@@ -31,6 +31,7 @@ class User(Collection):
 
 
     def convert(self, soundcloudUser):
+        print("souncloudUser : " + str(soundcloudUser))
         self._key = soundcloudUser.id
         self.username = soundcloudUser.username
         self.full_name = soundcloudUser.full_name
@@ -80,7 +81,10 @@ class User(Collection):
             'playlist_count':self.playlist_count,
             'followers_count':self.followers_count,
             'followings_count':self.followings_count,
-            'public_favorites_count':self.public_favorites_count
+            'public_favorites_count':self.public_favorites_count,
+            'permalink':self.permalink,
+            'uri':self.uri,
+            'avatar_url':self.avatar_url
         }
 
     def __eq__(self, other):

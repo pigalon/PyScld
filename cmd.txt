@@ -10,3 +10,5 @@ export FLASK_ENV=development
 flask run
 
 pip install -U flask-cors
+
+ scdl -l https://soundcloud.com/pierrock/sets/january-2019 -c

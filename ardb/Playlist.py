@@ -3,8 +3,8 @@ from arango import ArangoClient
 from arango_orm import Database, Collection, Relation, Graph, GraphConnection
 from arango_orm.fields import List, String, UUID, Integer, Boolean, DateTime, Date
 
-from soundcld.util.Util import StringUtil
-from soundcld.util.Util import DateUtil
+from util.BaseUtil import StringUtil
+from util.BaseUtil import DateUtil
 
 
 class Playlist(Collection):

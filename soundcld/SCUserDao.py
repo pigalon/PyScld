@@ -1,8 +1,7 @@
 
 from soundcld.SCTrackDao  import SCTrackDao
-#from arangodb.Track import Track
-#from arangodb.User import User
 from datetime import datetime
+from util.ScDbUtil import ScDbUtil
 
 import json, urllib.request
 
@@ -149,15 +148,15 @@ class SCUserDao():
         pgsize=self.get_pgsize_from_limit(limit)
         
         followings = self.clientSC.get('/users/'+str(userId)+'/followings' , limit=pgsize, linked_partitioning=1)
-
         for following in followings.collection :
-            followingsComplete.append(self.create_user_to_db(following))
+            followingsComplete.append(following)
 
         try:
             while followings.next_href != None and (limit == 0 or len(followingsComplete)<limit) :
-                    followings = self.clientSC.get(followings.next_href , limit=pgsize)
-                    for following in followings.collection :
-                        followingsComplete.append(self.create_user_to_db(following))
+
+                followings = self.clientSC.get(followings.next_href , limit=pgsize)
+                for following in followings.collection :
+                    followingsComplete.append(following)
 
         except AttributeError as e:
                     print('EOS!: ' + str(e))
